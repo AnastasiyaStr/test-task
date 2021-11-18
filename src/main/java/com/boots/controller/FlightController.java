@@ -20,10 +20,17 @@ public class FlightController {
     private FlightServiceImpl flightService;
 
     @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR', 'ROLE_USER')")
-    @GetMapping(value = FlightServiceUrls.Flight.GET)
+    @GetMapping(value = FlightServiceUrls.Flight.GET_ALL)
     public ResponseEntity<List<FlightDTO>> flightsList() {
 
         return new ResponseEntity<>(flightService.getAllFlights(), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR', 'ROLE_USER')")
+    @GetMapping(value = FlightServiceUrls.Flight.GET)
+    public ResponseEntity<FlightDTO> getFlightById(@PathVariable Long id) {
+
+        return new ResponseEntity<>(flightService.getFlightById(id), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")

@@ -36,6 +36,16 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
+    public FlightDTO getFlightById(Long id) {
+
+        Flight flight = flightRepository.findById(id).orElseThrow(() ->
+                new EntityDoesNotExistException(FLIGHT_NOT_FOUND_MESSAGE));
+
+        return flightDTOMapper.fromFlight(flight);
+
+    }
+
+    @Override
     public FlightDTO createFlight(FlightDTO flightDTO) {
 
         Flight saved = flightRepository.save(flightDTOMapper.fromFlightDTO(flightDTO));
